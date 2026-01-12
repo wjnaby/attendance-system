@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -8,7 +9,11 @@ class RoleSeeder extends Seeder
 {
     public function run()
     {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'user']);
+        // Roles to seed
+        $roles = ['admin', 'user'];
+
+        foreach ($roles as $roleName) {
+            Role::firstOrCreate(['name' => $roleName]);
+        }
     }
 }
