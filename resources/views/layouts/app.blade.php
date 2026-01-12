@@ -27,12 +27,19 @@
                                 <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-blue-600">Dashboard</a>
                                 <a href="{{ route('admin.reports') }}" class="text-gray-600 hover:text-blue-600">Reports</a>
                                 <a href="{{ route('admin.users') }}" class="text-gray-600 hover:text-blue-600">Users</a>
+                                <a href="{{ route('admin.leave-requests') }}" class="text-gray-600 hover:text-blue-600">Leave Requests</a>
+                                <a href="{{ route('admin.audit-logs') }}" class="text-gray-600 hover:text-blue-600">Audit Logs</a>
+                                <a href="{{ route('admin.settings') }}" class="text-gray-600 hover:text-blue-600">Settings</a>
+
+
                             @else
                                 <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-blue-600">Dashboard</a>
                                 <a href="{{ route('qr.show') }}" class="text-gray-600 hover:text-blue-600">My QR</a>
                                 <a href="{{ route('qr.scan') }}" class="text-gray-600 hover:text-blue-600">Scan</a>
                                 <a href="{{ route('history') }}" class="text-gray-600 hover:text-blue-600">History</a>
+                                <a href="{{ route('leave-requests.index') }}" class="text-gray-600 hover:text-blue-600">Leave Request</a>
                             @endif
+
                             
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf

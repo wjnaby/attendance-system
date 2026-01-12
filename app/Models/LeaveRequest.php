@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,8 +35,9 @@ class LeaveRequest extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
     
+    // ✅ FIXED: safer date difference calculation
     public function getDaysCount()
     {
-        return $this->start_date->diffInDays($this->end_date) + 1;
+        return $this->end_date->diffInDays($this->start_date) + 1;
     }
 }
