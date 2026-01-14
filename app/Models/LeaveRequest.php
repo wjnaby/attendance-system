@@ -15,6 +15,7 @@ class LeaveRequest extends Model
         'end_date',
         'leave_type',
         'reason',
+        'mc_document',
         'status',
         'approved_by',
         'admin_notes',
