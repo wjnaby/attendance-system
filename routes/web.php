@@ -54,9 +54,9 @@ Route::middleware('auth')->group(function () {
     
     // User routes
     Route::get('/dashboard', [AttendanceController::class, 'dashboard'])->name('dashboard');
-    Route::get('/qr-code', [AttendanceController::class, 'showQrCode'])->name('qr.show');
     Route::get('/scan-qr', [AttendanceController::class, 'scanQr'])->name('qr.scan');
     Route::post('/check-in', [AttendanceController::class, 'processCheckIn'])->name('check.in');
+    Route::get('/attendance-confirmation', [AttendanceController::class, 'showConfirmation'])->name('attendance.confirmation');
     Route::get('/history', [AttendanceController::class, 'history'])->name('history');
     
     // Leave Requests
@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/qr-code', [AdminController::class, 'showWorkplaceQrCode'])->name('admin.qr');
+        Route::post('/qr-code/refresh', [AdminController::class, 'refreshWorkplaceQrCode'])->name('admin.qr.refresh');
         Route::get('/reports', [AdminController::class, 'reports'])->name('admin.reports');
         Route::get('/analytics', [AdminController::class, 'analytics'])->name('admin.analytics');
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
