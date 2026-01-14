@@ -7,6 +7,7 @@ use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ProfileController;
 
 // Public routes
 Route::get('/', function () {
@@ -45,6 +46,11 @@ Route::get('/manifest.json', function () {
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Profile routes (accessible by both users and admins)
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     
     // User routes
     Route::get('/dashboard', [AttendanceController::class, 'dashboard'])->name('dashboard');
