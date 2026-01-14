@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
-use App\Models\LeaveRequest;  // ✅ FIXED: import LeaveRequest model
-use App\Models\AuditLog;      // ✅ FIXED: import AuditLog model
+use App\Models\LeaveRequest;
+use App\Models\AuditLog;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AdminController extends Controller
 {
@@ -159,5 +161,59 @@ class AdminController extends Controller
         }
         
         return view('admin.analytics', compact('stats', 'weeklyData'));
+    }
+
+    /**
+     * Show the workplace QR code page for admin
+     * QR code changes daily for security
+     */
+    public function showWorkplaceQrCode()
+    {
+        $qrCode = $this->generateWorkplaceQrCode();
+        $expiresAt = now()->addMinutes(5)->format('h:i A');
+        $today = Carbon::today()->format('l, F j, Y');
+        
+        return view('admin.qr-code', compact('qrCode', 'expiresAt', 'today'));
+    }
+
+    /**
+     * Refresh the workplace QR code
+     */
+    public function refreshWorkplaceQrCode()
+    {
+        $qrCode = $this->generateWorkplaceQrCode();
+        $expiresAt = now()->addMinutes(5)->format('h:i A');
+        
+        AuditLog::log(
+            'qr_refresh',
+            'Workplace QR code refreshed by admin',
+            null
+        );
+        
+        return response()->json([
+            'success' => true,
+            'qr_code' => $qrCode,
+            'expires_at' => $expiresAt,
+            'message' => 'QR code refreshed successfully',
+        ]);
+    }
+
+    /**
+     * Generate workplace QR code with security features
+     */
+    private function generateWorkplaceQrCode()
+    {
+        $qrData = encrypt([
+            'workplace_code' => true,
+            'date' => Carbon::today()->toDateString(),
+            'timestamp' => now()->timestamp,
+            'security_hash' => hash('sha256', config('app.key') . Carbon::today()->toDateString()),
+        ]);
+        
+        return QrCode::size(350)
+            ->backgroundColor(255, 255, 255)
+            ->color(30, 64, 175)
+            ->margin(2)
+            ->generate($qrData);
     }
 }

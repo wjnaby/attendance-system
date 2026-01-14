@@ -27,26 +27,6 @@
             </div>
         </div>
         
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200 dark:divide-gray-700">
-            <div class="px-6 py-4 text-center">
-                <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $attendanceStats['total_days'] }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Days This Month</p>
-            </div>
-            <div class="px-6 py-4 text-center">
-                <p class="text-2xl font-bold text-emerald-600">{{ $attendanceStats['present'] }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Present</p>
-            </div>
-            <div class="px-6 py-4 text-center">
-                <p class="text-2xl font-bold text-amber-600">{{ $attendanceStats['late'] }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Late</p>
-            </div>
-            <div class="px-6 py-4 text-center">
-                <p class="text-2xl font-bold text-red-600">{{ $attendanceStats['absent'] }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Absent</p>
-            </div>
-        </div>
-    </div>
 
     <!-- Profile Information Form -->
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 mb-6">
